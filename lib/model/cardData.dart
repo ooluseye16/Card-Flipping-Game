@@ -80,14 +80,13 @@ class CardData extends ChangeNotifier {
       }
     });
     shuffled.shuffle();
-    //notifyListeners();
   }
 
   List<CardModel> compareThis = [];
   void flipAndCompare(int index) {
     shuffled[index].selected = !shuffled[index].selected;
     notifyListeners();
-    if (shuffled[index].selected == false && compareThis.length < 2) {
+    if (!shuffled[index].selected && compareThis.length < 2) {
       compareThis.add(shuffled[index]);
       notifyListeners();
       Future.delayed(Duration(milliseconds: 600), () {
@@ -100,18 +99,15 @@ class CardData extends ChangeNotifier {
           } else {
             for (var card in compareThis) {
               card.selected = true;
-              notifyListeners();
             }
             compareThis.clear();
           }
         }
         notifyListeners();
       });
-      print(compareThis);
-    } else if (shuffled[index].selected == true) {
+    } else if (shuffled[index].selected) {
       compareThis.remove(shuffled[index]);
       notifyListeners();
-      print(compareThis);
     }
   }
 
